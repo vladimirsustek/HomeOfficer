@@ -136,7 +136,7 @@ int main(void)
 			  /* Send an report to PC*/
 			  USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&mouseState, sizeof(mouseState));
 
-			  timeToWait = (mouseState.mouse_x & 0xF) * 100;
+			  timeToWait = (mouseState.mouse_x & 0xF) * 1000;
 
 			  state = MoveBack;
 
@@ -161,7 +161,11 @@ int main(void)
 		  }
 
 		  lastTick = HAL_GetTick();
-		  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+
+		  /* Signalizing that device works (LED flash)*/
+		  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+		  HAL_Delay(200);
+		  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
 	  }
 
     /* USER CODE END WHILE */
