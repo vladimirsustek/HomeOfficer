@@ -1,4 +1,4 @@
-/* USER CODE BEGIN Header */
+ /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file           : main.c
@@ -125,18 +125,18 @@ int main(void)
 		  {
 			  /*Rand X by getting ADC noise VAL*/
 			  HAL_ADC_Start(&hadc1);
-			  mouseState.mouse_x = (int8_t)HAL_ADC_GetValue(&hadc1)/16;
+			  mouseState.mouse_x = (int8_t)HAL_ADC_GetValue(&hadc1)/8;
 			  HAL_ADC_Stop(&hadc1);
 
 			  /*Rand Y by getting ADC noise VAL*/
 			  HAL_ADC_Start(&hadc1);
-			  mouseState.mouse_y = (int8_t)HAL_ADC_GetValue(&hadc1)/16;
+			  mouseState.mouse_y = (int8_t)HAL_ADC_GetValue(&hadc1)/8;
 			  HAL_ADC_Stop(&hadc1);
 
 			  /* Send an report to PC*/
 			  USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&mouseState, sizeof(mouseState));
 
-			  timeToWait = (mouseState.mouse_x & 0xF) * 1000;
+			  timeToWait = (mouseState.mouse_x & 0xF) * 500;
 
 			  state = MoveBack;
 
